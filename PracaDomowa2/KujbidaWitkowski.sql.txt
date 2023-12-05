@@ -1,0 +1,253 @@
+CREATE SEQUENCE seq_jednostka 
+    START WITH 1 
+    INCREMENT BY 1
+    NOCACHE
+    NOCYCLE;
+
+-- Sprawa
+CREATE SEQUENCE seq_sprawa 
+    START WITH 1 
+    INCREMENT BY 1
+    NOCACHE
+    NOCYCLE;
+
+-- Dowod
+CREATE SEQUENCE seq_dowod 
+    START WITH 1 
+    INCREMENT BY 1
+    NOCACHE
+    NOCYCLE;
+
+-- Przestepca
+CREATE SEQUENCE seq_przestepca 
+    START WITH 1 
+    INCREMENT BY 1
+    NOCACHE
+    NOCYCLE;
+
+-- Aresztowanie
+CREATE SEQUENCE seq_aresztowanie 
+    START WITH 1 
+    INCREMENT BY 1
+    NOCACHE
+    NOCYCLE;
+
+-- Miejsce
+CREATE SEQUENCE seq_miejsce 
+    START WITH 1 
+    INCREMENT BY 1
+    NOCACHE
+    NOCYCLE;
+
+-- Patrol
+CREATE SEQUENCE seq_patrol 
+    START WITH 1 
+    INCREMENT BY 1
+    NOCACHE
+    NOCYCLE;
+
+-- Wykroczenie
+CREATE SEQUENCE seq_wykroczenie 
+    START WITH 1 
+    INCREMENT BY 1
+    NOCACHE
+    NOCYCLE;
+
+-- Ofiara
+CREATE SEQUENCE seq_ofiara 
+    START WITH 1 
+    INCREMENT BY 1
+    NOCACHE
+    NOCYCLE;
+
+-- Poszukiwany
+CREATE SEQUENCE seq_poszukiwany 
+    START WITH 1 
+    INCREMENT BY 1
+    NOCACHE
+    NOCYCLE;
+
+-- Nagroda
+CREATE SEQUENCE seq_nagroda 
+    START WITH 1 
+    INCREMENT BY 1
+    NOCACHE
+    NOCYCLE;
+
+-- Interwencja
+CREATE SEQUENCE seq_interwencja 
+    START WITH 1 
+    INCREMENT BY 1
+    NOCACHE
+    NOCYCLE;
+
+
+
+
+-- Funkcjonariusz
+INSERT INTO Funkcjonariusz VALUES (seq_funkcjonariusz.NEXTVAL, 'Imie1', 'Nazwisko1', 'Stopien1', 12345);
+INSERT INTO Funkcjonariusz VALUES (seq_funkcjonariusz.NEXTVAL, 'Imie2', 'Nazwisko2', 'Stopien2', 67890);
+INSERT INTO Funkcjonariusz VALUES (seq_funkcjonariusz.NEXTVAL, 'Imie3', 'Nazwisko3', 'Stopien3', 11111);
+INSERT INTO Funkcjonariusz VALUES (seq_funkcjonariusz.NEXTVAL, 'Imie4', 'Nazwisko4', 'Stopien4', 22222);
+INSERT INTO Funkcjonariusz VALUES (seq_funkcjonariusz.NEXTVAL, 'Imie5', 'Nazwisko5', 'Stopien5', 33333);
+
+-- Jednostka
+INSERT INTO Jednostka VALUES (seq_jednostka.NEXTVAL, 'Nazwa1', 'Lokalizacja1');
+INSERT INTO Jednostka VALUES (seq_jednostka.NEXTVAL, 'Nazwa2', 'Lokalizacja2');
+INSERT INTO Jednostka VALUES (seq_jednostka.NEXTVAL, 'Nazwa3', 'Lokalizacja3');
+INSERT INTO Jednostka VALUES (seq_jednostka.NEXTVAL, 'Nazwa4', 'Lokalizacja4');
+INSERT INTO Jednostka VALUES (seq_jednostka.NEXTVAL, 'Nazwa5', 'Lokalizacja5');
+
+-- Sprawa
+INSERT INTO Sprawa VALUES (seq_sprawa.NEXTVAL, 'Opis1', 'Status1', 1);
+INSERT INTO Sprawa VALUES (seq_sprawa.NEXTVAL, 'Opis2', 'Status2', 2);
+INSERT INTO Sprawa VALUES (seq_sprawa.NEXTVAL, 'Opis3', 'Status3', 3);
+INSERT INTO Sprawa VALUES (seq_sprawa.NEXTVAL, 'Opis4', 'Status4', 4);
+INSERT INTO Sprawa VALUES (seq_sprawa.NEXTVAL, 'Opis5', 'Status5', 5);
+
+-- Dowod
+INSERT INTO Dowod VALUES (seq_dowod.NEXTVAL, 'Opis1', 1);
+INSERT INTO Dowod VALUES (seq_dowod.NEXTVAL, 'Opis2', 2);
+INSERT INTO Dowod VALUES (seq_dowod.NEXTVAL, 'Opis3', 3);
+INSERT INTO Dowod VALUES (seq_dowod.NEXTVAL, 'Opis4', 4);
+INSERT INTO Dowod VALUES (seq_dowod.NEXTVAL, 'Opis5', 5);
+
+-- Przestepca
+INSERT INTO Przestepca VALUES (seq_przestepca.NEXTVAL, 'ImieNazwisko1', 'Pseudonim1', 1);
+INSERT INTO Przestepca VALUES (seq_przestepca.NEXTVAL, 'ImieNazwisko2', 'Pseudonim2', 2);
+INSERT INTO Przestepca VALUES (seq_przestepca.NEXTVAL, 'ImieNazwisko3', 'Pseudonim3', 3);
+INSERT INTO Przestepca VALUES (seq_przestepca.NEXTVAL, 'ImieNazwisko4', 'Pseudonim4', 4);
+INSERT INTO Przestepca VALUES (seq_przestepca.NEXTVAL, 'ImieNazwisko5', 'Pseudonim5', 5);
+
+-- Aresztowanie
+INSERT INTO Aresztowanie VALUES (seq_aresztowanie.NEXTVAL, 1, 1, 1, '2023-01-01');
+INSERT INTO Aresztowanie VALUES (seq_aresztowanie.NEXTVAL, 2, 2, 2, '2023-02-02');
+INSERT INTO Aresztowanie VALUES (seq_aresztowanie.NEXTVAL, 3, 3, 3, '2023-03-03');
+INSERT INTO Aresztowanie VALUES (seq_aresztowanie.NEXTVAL, 4, 4, 4, '2023-04-04');
+INSERT INTO Aresztowanie VALUES (seq_aresztowanie.NEXTVAL, 5, 5, 5, '2023-05-05');
+
+-- Miejsce
+INSERT INTO Miejsce VALUES (seq_miejsce.NEXTVAL, 'NazwaMiejsca1', 'OpisMiejsca1');
+INSERT INTO Miejsce VALUES (seq_miejsce.NEXTVAL, 'NazwaMiejsca2', 'OpisMiejsca2');
+INSERT INTO Miejsce VALUES (seq_miejsce.NEXTVAL, 'NazwaMiejsca3', 'OpisMiejsca3');
+INSERT INTO Miejsce VALUES (seq_miejsce.NEXTVAL, 'NazwaMiejsca4', 'OpisMiejsca4');
+INSERT INTO Miejsce VALUES (seq_miejsce.NEXTVAL, 'NazwaMiejsca5', 'OpisMiejsca5');
+
+-- Patrol
+INSERT INTO Patrol VALUES (seq_patrol.NEXTVAL, 1, '2023-01-01');
+INSERT INTO Patrol VALUES (seq_patrol.NEXTVAL, 2, '2023-02-02');
+INSERT INTO Patrol VALUES (seq_patrol.NEXTVAL, 3, '2023-03-03');
+INSERT INTO Patrol VALUES (seq_patrol.NEXTVAL, 4, '2023-04-04');
+INSERT INTO Patrol VALUES (seq_patrol.NEXTVAL, 5, '2023-05-05');
+
+-- Wykroczenie
+INSERT INTO Wykroczenie VALUES (seq_wykroczenie.NEXTVAL, 'OpisWykroczenia1', 1);
+INSERT INTO Wykroczenie VALUES (seq_wykroczenie.NEXTVAL, 'OpisWykroczenia2', 2);
+INSERT INTO Wykroczenie VALUES (seq_wykroczenie.NEXTVAL, 'OpisWykroczenia3', 3);
+INSERT INTO Wykroczenie VALUES (seq_wykroczenie.NEXTVAL, 'OpisWykroczenia4', 4);
+INSERT INTO Wykroczenie VALUES (seq_wykroczenie.NEXTVAL, 'OpisWykroczenia5', 5);
+
+-- Ofiara
+INSERT INTO Ofiara VALUES (seq_ofiara.NEXTVAL, 'ImieNazwiskoOfiary1', 1);
+INSERT INTO Ofiara VALUES (seq_ofiara.NEXTVAL, 'ImieNazwiskoOfiary2', 2);
+INSERT INTO Ofiara VALUES (seq_ofiara.NEXTVAL, 'ImieNazwiskoOfiary3', 3);
+INSERT INTO Ofiara VALUES (seq_ofiara.NEXTVAL, 'ImieNazwiskoOfiary4', 4);
+INSERT INTO Ofiara VALUES (seq_ofiara.NEXTVAL, 'ImieNazwiskoOfiary5', 5);
+
+-- Poszukiwany
+INSERT INTO Poszukiwany VALUES (seq_poszukiwany.NEXTVAL, 'ImieNazwiskoPoszukiwanego1', 1000.00);
+INSERT INTO Poszukiwany VALUES (seq_poszukiwany.NEXTVAL, 'ImieNazwiskoPoszukiwanego2', 1500.00);
+INSERT INTO Poszukiwany VALUES (seq_poszukiwany.NEXTVAL, 'ImieNazwiskoPoszukiwanego3', 2000.00);
+INSERT INTO Poszukiwany VALUES (seq_poszukiwany.NEXTVAL, 'ImieNazwiskoPoszukiwanego4', 2500.00);
+INSERT INTO Poszukiwany VALUES (seq_poszukiwany.NEXTVAL, 'ImieNazwiskoPoszukiwanego5', 3000.00);
+
+-- Nagroda
+INSERT INTO Nagroda VALUES (seq_nagroda.NEXTVAL, 1, 500.00);
+INSERT INTO Nagroda VALUES (seq_nagroda.NEXTVAL, 2, 800.00);
+INSERT INTO Nagroda VALUES (seq_nagroda.NEXTVAL, 3, 1200.00);
+INSERT INTO Nagroda VALUES (seq_nagroda.NEXTVAL, 4, 1500.00);
+INSERT INTO Nagroda VALUES (seq_nagroda.NEXTVAL, 5, 2000.00);
+
+-- Interwencja
+INSERT INTO Interwencja VALUES (seq_interwencja.NEXTVAL, 1, 1, '2023-01-01');
+INSERT INTO Interwencja VALUES (seq_interwencja.NEXTVAL, 2, 2, '2023-02-02');
+INSERT INTO Interwencja VALUES (seq_interwencja.NEXTVAL, 3, 3, '2023-03-03');
+INSERT INTO Interwencja VALUES (seq_interwencja.NEXTVAL, 4, 4, '2023-04-04');
+INSERT INTO Interwencja VALUES (seq_interwencja.NEXTVAL, 5, 5, '2023-05-05');
+
+-- Naruszenie ograniczenia UNIQUE dla tabeli Funkcjonariusz
+INSERT INTO Funkcjonariusz VALUES (seq_funkcjonariusz.NEXTVAL, 'Imie1', 'Nazwisko1', 'Stopien1', 12345);
+
+-- Naruszenie ograniczenia NOT NULL dla tabeli Funkcjonariusz
+INSERT INTO Funkcjonariusz (id_funkcjonariusza, imie, nazwisko, stopien) VALUES (seq_funkcjonariusz.NEXTVAL, 'Imie3', 'Nazwisko3', NULL);
+
+-- Naruszenie ograniczenia CHECK dla tabeli Funkcjonariusz (przykładowy check na numer_legitymacji)
+INSERT INTO Funkcjonariusz VALUES (seq_funkcjonariusz.NEXTVAL, 'Imie4', 'Nazwisko4', 'Stopien4', -123);
+
+-- Naruszenie ograniczenia klucza obcego dla tabeli Aresztowanie (id_funkcjonariusza nie istnieje)
+INSERT INTO Aresztowanie VALUES (seq_aresztowanie.NEXTVAL, 999, 1, 1, '2023-01-01');
+
+
+-- Dodawanie kolumny
+ALTER TABLE Funkcjonariusz ADD test VARCHAR2(20);
+
+-- Dodawanie ograniczeń do dodanej kolumny
+ALTER TABLE Funkcjonariusz MODIFY test VARCHAR2(20) NOT NULL;
+
+-- Usuwanie ograniczeń dotyczących dodanej kolumny
+ALTER TABLE Funkcjonariusz MODIFY test VARCHAR2(20);
+
+-- Usuwanie dodanej kolumny
+ALTER TABLE Funkcjonariusz DROP COLUMN test;
+
+
+
+
+--Oblicz średnią kwotę nagród dla poszzukiwanych.
+SELECT p.id_poszukiwanego, p.imie_nazwisko, AVG(n.kwota) as srednia_kwota
+FROM Poszukiwany p
+JOIN Nagroda n ON p.id_poszukiwanego = n.id_poszukiwanego
+GROUP BY p.id_poszukiwanego, p.imie_nazwisko;
+
+--Pobierz informacje o funkcjonariuszach i ich jednostkach.
+SELECT f.id_funkcjonariusza, f.imie, f.nazwisko, j.nazwa as jednostka_nazwa
+FROM Funkcjonariusz f
+JOIN Jednostka j ON f.id_jednostki = j.id_jednostki;
+
+--Znajdź funkcjonariuszy, którzy uczestniczyli w największej liczbie interwencji.
+
+SELECT id_funkcjonariusza, imie, nazwisko
+FROM Funkcjonariusz
+WHERE id_funkcjonariusza IN (
+    SELECT id_funkcjonariusza
+    FROM Interwencja
+    GROUP BY id_funkcjonariusza
+    ORDER BY COUNT(*) DESC
+    LIMIT 1
+);
+
+
+--Zwróć informacje o poszukiwanych i dodaj kategorię "Wysoka nagroda" dla tych z nagrodą powyżej 1000.
+
+SELECT *, 
+    CASE 
+        WHEN nagroda > 1000 THEN 'Wysoka nagroda'
+        ELSE 'Niska nagroda'
+    END as kategoria_nagrody
+FROM Poszukiwany;
+
+--Znajdź jednostki, które miały co najmniej 3 interwencje.
+
+SELECT j.id_jednostki, j.nazwa, COUNT(i.id_interwencji) as liczba_interwencji
+FROM Jednostka j
+JOIN Sprawa s ON j.id_jednostki = s.id_jednostki
+JOIN Interwencja i ON s.id_sprawy = i.id_sprawy
+GROUP BY j.id_jednostki, j.nazwa
+HAVING COUNT(i.id_interwencji) >= 3;
+
+
+--Znajdź wszystkie interwencje z ostatniego miesiąca.
+
+SELECT data_interwencji, nazwa 
+FROM Interwencja
+WHERE data_interwencji >= CURRENT_DATE - INTERVAL '1' MONTH;
