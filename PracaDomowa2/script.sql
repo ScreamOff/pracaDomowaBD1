@@ -17,7 +17,7 @@ CREATE TABLE Jednostka (
 -- Tabela: Sprawa
 CREATE TABLE Sprawa (
   id_sprawy INT PRIMARY KEY,
-  opis TEXT,
+  opis VARCHAR(255),
   status VARCHAR(50),
   id_jednostki INT,
   FOREIGN KEY (id_jednostki) REFERENCES Jednostka(id_jednostki)
@@ -26,7 +26,7 @@ CREATE TABLE Sprawa (
 -- Tabela: Dowód
 CREATE TABLE Dowod (
   id_dowodu INT PRIMARY KEY,
-  opis TEXT,
+  opis VARCHAR(255),
   id_sprawy INT,
   FOREIGN KEY (id_sprawy) REFERENCES Sprawa(id_sprawy)
 );
@@ -56,7 +56,7 @@ CREATE TABLE Aresztowanie (
 CREATE TABLE Miejsce (
   id_miejsca INT PRIMARY KEY,
   nazwa_miejsca VARCHAR(255),
-  opis TEXT
+  opis VARCHAR(255)
 );
 
 -- Tabela: Patrol
@@ -70,7 +70,7 @@ CREATE TABLE PatroL (
 -- Tabela: Wykroczenie
 CREATE TABLE Wykroczenie (
   id_wykroczenia INT PRIMARY KEY,
-  opis TEXT,
+  opis VARCHAR(255),
   id_sprawy INT,
   FOREIGN KEY (id_sprawy) REFERENCES Sprawa(id_sprawy)
 );
