@@ -11,8 +11,11 @@ CREATE TABLE Funkcjonariusz (
 CREATE TABLE Jednostka (
   id_jednostki INT PRIMARY KEY,
   nazwa VARCHAR(100),
-  lokalizacja VARCHAR(255)
+  lokalizacja VARCHAR(255),
+  id_funkcjonariusza INT,
+  FOREIGN KEY (id_funkcjonariusza) REFERENCES Funkcjonariusz(id_funkcjonariusza)
 );
+
 
 -- Tabela: Sprawa
 CREATE TABLE Sprawa (

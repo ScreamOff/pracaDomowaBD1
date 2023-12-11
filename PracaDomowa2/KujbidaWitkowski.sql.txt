@@ -81,7 +81,11 @@ CREATE SEQUENCE seq_interwencja
     NOCACHE
     NOCYCLE;
 
-
+CREATE SEQUENCE seq_funkcjonariusz 
+    START WITH 1 
+    INCREMENT BY 1
+    NOCACHE
+    NOCYCLE;
 
 
 -- Funkcjonariusz
@@ -120,11 +124,11 @@ INSERT INTO Przestepca VALUES (seq_przestepca.NEXTVAL, 'ImieNazwisko4', 'Pseudon
 INSERT INTO Przestepca VALUES (seq_przestepca.NEXTVAL, 'ImieNazwisko5', 'Pseudonim5', 5);
 
 -- Aresztowanie
-INSERT INTO Aresztowanie VALUES (seq_aresztowanie.NEXTVAL, 1, 1, 1, '2023-01-01');
-INSERT INTO Aresztowanie VALUES (seq_aresztowanie.NEXTVAL, 2, 2, 2, '2023-02-02');
-INSERT INTO Aresztowanie VALUES (seq_aresztowanie.NEXTVAL, 3, 3, 3, '2023-03-03');
-INSERT INTO Aresztowanie VALUES (seq_aresztowanie.NEXTVAL, 4, 4, 4, '2023-04-04');
-INSERT INTO Aresztowanie VALUES (seq_aresztowanie.NEXTVAL, 5, 5, 5, '2023-05-05');
+INSERT INTO Aresztowanie VALUES (seq_aresztowanie.NEXTVAL, 1, 1, 1, TO_DATE('2023-01-01', 'YYYY-MM-DD'));
+INSERT INTO Aresztowanie VALUES (seq_aresztowanie.NEXTVAL, 2, 2, 2, TO_DATE('2023-02-02', 'YYYY-MM-DD'));
+INSERT INTO Aresztowanie VALUES (seq_aresztowanie.NEXTVAL, 3, 3, 3, TO_DATE('2023-03-03', 'YYYY-MM-DD'));
+INSERT INTO Aresztowanie VALUES (seq_aresztowanie.NEXTVAL, 4, 4, 4, TO_DATE('2023-04-04', 'YYYY-MM-DD'));
+INSERT INTO Aresztowanie VALUES (seq_aresztowanie.NEXTVAL, 5, 5, 5, TO_DATE('2023-05-05', 'YYYY-MM-DD'));
 
 -- Miejsce
 INSERT INTO Miejsce VALUES (seq_miejsce.NEXTVAL, 'NazwaMiejsca1', 'OpisMiejsca1');
@@ -134,11 +138,11 @@ INSERT INTO Miejsce VALUES (seq_miejsce.NEXTVAL, 'NazwaMiejsca4', 'OpisMiejsca4'
 INSERT INTO Miejsce VALUES (seq_miejsce.NEXTVAL, 'NazwaMiejsca5', 'OpisMiejsca5');
 
 -- Patrol
-INSERT INTO Patrol VALUES (seq_patrol.NEXTVAL, 1, '2023-01-01');
-INSERT INTO Patrol VALUES (seq_patrol.NEXTVAL, 2, '2023-02-02');
-INSERT INTO Patrol VALUES (seq_patrol.NEXTVAL, 3, '2023-03-03');
-INSERT INTO Patrol VALUES (seq_patrol.NEXTVAL, 4, '2023-04-04');
-INSERT INTO Patrol VALUES (seq_patrol.NEXTVAL, 5, '2023-05-05');
+INSERT INTO Patrol VALUES (seq_patrol.NEXTVAL, 1, TO_DATE('2023-01-01', 'YYYY-MM-DD'));
+INSERT INTO Patrol VALUES (seq_patrol.NEXTVAL, 2, TO_DATE('2023-02-02', 'YYYY-MM-DD'));
+INSERT INTO Patrol VALUES (seq_patrol.NEXTVAL, 3, TO_DATE('2023-03-03', 'YYYY-MM-DD'));
+INSERT INTO Patrol VALUES (seq_patrol.NEXTVAL, 4, TO_DATE('2023-04-04', 'YYYY-MM-DD'));
+INSERT INTO Patrol VALUES (seq_patrol.NEXTVAL, 5, TO_DATE('2023-05-05', 'YYYY-MM-DD'));
 
 -- Wykroczenie
 INSERT INTO Wykroczenie VALUES (seq_wykroczenie.NEXTVAL, 'OpisWykroczenia1', 1);
@@ -169,11 +173,11 @@ INSERT INTO Nagroda VALUES (seq_nagroda.NEXTVAL, 4, 1500.00);
 INSERT INTO Nagroda VALUES (seq_nagroda.NEXTVAL, 5, 2000.00);
 
 -- Interwencja
-INSERT INTO Interwencja VALUES (seq_interwencja.NEXTVAL, 1, 1, '2023-01-01');
-INSERT INTO Interwencja VALUES (seq_interwencja.NEXTVAL, 2, 2, '2023-02-02');
-INSERT INTO Interwencja VALUES (seq_interwencja.NEXTVAL, 3, 3, '2023-03-03');
-INSERT INTO Interwencja VALUES (seq_interwencja.NEXTVAL, 4, 4, '2023-04-04');
-INSERT INTO Interwencja VALUES (seq_interwencja.NEXTVAL, 5, 5, '2023-05-05');
+INSERT INTO Interwencja VALUES (seq_interwencja.NEXTVAL, 1, 1, TO_DATE('2023-01-01', 'YYYY-MM-DD'));
+INSERT INTO Interwencja VALUES (seq_interwencja.NEXTVAL, 2, 2, TO_DATE('2023-02-02', 'YYYY-MM-DD'));
+INSERT INTO Interwencja VALUES (seq_interwencja.NEXTVAL, 3, 3, TO_DATE('2023-03-03', 'YYYY-MM-DD');
+INSERT INTO Interwencja VALUES (seq_interwencja.NEXTVAL, 4, 4, TO_DATE('2023-04-04', 'YYYY-MM-DD'));
+INSERT INTO Interwencja VALUES (seq_interwencja.NEXTVAL, 5, 5, TO_DATE('2023-05-05', 'YYYY-MM-DD'));
 
 -- Naruszenie ograniczenia UNIQUE dla tabeli Funkcjonariusz
 INSERT INTO Funkcjonariusz VALUES (seq_funkcjonariusz.NEXTVAL, 'Imie1', 'Nazwisko1', 'Stopien1', 12345);
@@ -185,7 +189,7 @@ INSERT INTO Funkcjonariusz (id_funkcjonariusza, imie, nazwisko, stopien) VALUES 
 INSERT INTO Funkcjonariusz VALUES (seq_funkcjonariusz.NEXTVAL, 'Imie4', 'Nazwisko4', 'Stopien4', -123);
 
 -- Naruszenie ograniczenia klucza obcego dla tabeli Aresztowanie (id_funkcjonariusza nie istnieje)
-INSERT INTO Aresztowanie VALUES (seq_aresztowanie.NEXTVAL, 999, 1, 1, '2023-01-01');
+INSERT INTO Aresztowanie VALUES (seq_aresztowanie.NEXTVAL, 999, 1, 1, TO_DATE('2023-01-01', 'YYYY-MM-DD'));
 
 
 -- Dodawanie kolumny
