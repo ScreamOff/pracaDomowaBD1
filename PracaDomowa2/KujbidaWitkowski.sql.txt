@@ -207,6 +207,7 @@ ALTER TABLE Funkcjonariusz DROP COLUMN test;
 
 
 
+
 --Oblicz średnią kwotę nagród dla poszzukiwanych.
 SELECT p.id_poszukiwanego, p.imie_nazwisko, AVG(n.kwota) as srednia_kwota
 FROM Poszukiwany p
@@ -216,19 +217,20 @@ GROUP BY p.id_poszukiwanego, p.imie_nazwisko;
 --Pobierz informacje o funkcjonariuszach i ich jednostkach.
 SELECT f.id_funkcjonariusza, f.imie, f.nazwisko, j.nazwa as jednostka_nazwa
 FROM Funkcjonariusz f
-JOIN Jednostka j ON f.id_jednostki = j.id_jednostki;
+JOIN Jednostka j ON f.id_funkcjonariusza = j.id_funkcjonariusza;
 
---Znajdź funkcjonariuszy, którzy uczestniczyli w największej liczbie interwencji.
+--Znajdź jednostki, które miały najwięcej aresztowań
 
-SELECT id_funkcjonariusza, imie, nazwisko
-FROM Funkcjonariusz
-WHERE id_funkcjonariusza IN (
-    SELECT id_funkcjonariusza
-    FROM Interwencja
-    GROUP BY id_funkcjonariusza
-    ORDER BY COUNT(*) DESC
-    LIMIT 1
-);
+SELECT 
+    j.id_jednostki,
+    j.nazwa,
+    COUNT(a.id_aresztowania) AS liczba_aresztowan
+FROM Jednostka j
+LEFT JOIN Sprawa s ON j.id_jednostki = s.id_jednostki
+LEFT JOIN Aresztowanie a ON s.id_sprawy = a.id_sprawy
+GROUP BY j.id_jednostki, j.nazwa
+ORDER BY liczba_aresztowan DESC;
+
 
 
 --Zwróć informacje o poszukiwanych i dodaj kategorię "Wysoka nagroda" dla tych z nagrodą powyżej 1000.
@@ -252,6 +254,7 @@ HAVING COUNT(i.id_interwencji) >= 3;
 
 --Znajdź wszystkie interwencje z ostatniego miesiąca.
 
-SELECT data_interwencji, nazwa 
+SELECT data_interwencji, id_interwencji 
 FROM Interwencja
 WHERE data_interwencji >= CURRENT_DATE - INTERVAL '1' MONTH;
+
