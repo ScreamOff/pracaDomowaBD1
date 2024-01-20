@@ -1,0 +1,29 @@
+-- Usuwanie wszystkich tabel
+DROP TABLE Aresztowanie;
+DROP TABLE Dowod;
+DROP TABLE Funkcjonariusz;
+DROP TABLE Interwencja;
+DROP TABLE Jednostka;
+DROP TABLE Miejsce;
+DROP TABLE Nagroda;
+DROP TABLE Ofiara;
+DROP TABLE PatroL;
+DROP TABLE Poszukiwany;
+DROP TABLE Przestepca;
+DROP TABLE Sprawa;
+DROP TABLE Wykroczenie;
+
+-- Usuwanie wszystkich sekwencji
+DROP SEQUENCE seq_aresztowanie;
+DROP SEQUENCE seq_dowod;
+DROP SEQUENCE seq_funkcjonariusz;
+DROP SEQUENCE seq_interwencja;
+DROP SEQUENCE seq_jednostka;
+DROP SEQUENCE seq_miejsce;
+DROP SEQUENCE seq_nagroda;
+DROP SEQUENCE seq_ofiara;
+DROP SEQUENCE seq_patrol;
+DROP SEQUENCE seq_poszukiwany;
+DROP SEQUENCE seq_przestepca;
+DROP SEQUENCE seq_sprawa;
+DROP SEQUENCE seq_wykroczenie;
