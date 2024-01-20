@@ -96,11 +96,11 @@ INSERT INTO Funkcjonariusz VALUES (seq_funkcjonariusz.NEXTVAL, 'Imie4', 'Nazwisk
 INSERT INTO Funkcjonariusz VALUES (seq_funkcjonariusz.NEXTVAL, 'Imie5', 'Nazwisko5', 'Stopien5', 33333);
 
 -- Jednostka
-INSERT INTO Jednostka VALUES (seq_jednostka.NEXTVAL, 'Nazwa1', 'Lokalizacja1');
-INSERT INTO Jednostka VALUES (seq_jednostka.NEXTVAL, 'Nazwa2', 'Lokalizacja2');
-INSERT INTO Jednostka VALUES (seq_jednostka.NEXTVAL, 'Nazwa3', 'Lokalizacja3');
-INSERT INTO Jednostka VALUES (seq_jednostka.NEXTVAL, 'Nazwa4', 'Lokalizacja4');
-INSERT INTO Jednostka VALUES (seq_jednostka.NEXTVAL, 'Nazwa5', 'Lokalizacja5');
+INSERT INTO Jednostka VALUES (seq_jednostka.NEXTVAL, 'Nazwa1', 'Lokalizacja1', 1);
+INSERT INTO Jednostka VALUES (seq_jednostka.NEXTVAL, 'Nazwa2', 'Lokalizacja2', 2);
+INSERT INTO Jednostka VALUES (seq_jednostka.NEXTVAL, 'Nazwa3', 'Lokalizacja3', 3);
+INSERT INTO Jednostka VALUES (seq_jednostka.NEXTVAL, 'Nazwa4', 'Lokalizacja4', 4);
+INSERT INTO Jednostka VALUES (seq_jednostka.NEXTVAL, 'Nazwa5', 'Lokalizacja5', 5);
 
 -- Sprawa
 INSERT INTO Sprawa VALUES (seq_sprawa.NEXTVAL, 'Opis1', 'Status1', 1);

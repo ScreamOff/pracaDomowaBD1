@@ -2,34 +2,14 @@ Tematem jest projektowanie bazy danych dla systemu zarządzania policją.
  Baza danych ma wspierać przechowywanie informacji o funkcjonariuszach, jednostkach, sprawach kryminalnych,
  dowodach, przestępcach, aresztowaniach, miejscach, patrolach, wykroczeniach,
  ofiarach, poszukiwanych, nagrodach i interwencjach.
-Na podany temat każda grupa 2 osobowa powinna przygotować następujące skrypty (*.sql):
-1. Tworzący po jednej sekwencji dla każdego klucza głównego.
-2. Usuwający wszystkie sekwencje.
-3. Zawierający co najmniej 5-10 poleceń INSERT dla każdej tabeli.
-4. Zawierający po jednej instrukcji INSERT naruszającej każdy z typów ograniczeń (np. UNIQUE, NOT NULL, CHECK, klucza głównego, klucza obcego, itp) dla dowolnej tabeli.
-5. Modyfikujący dowolnie wybraną tabelę: 
- * dodający kolumnę (np. test VARCHAR2(20)),
- * dodający ograniczenia do dodanej kolumny (np. NOT NULL),
- * usuwający ograniczenia dotyczące dodanej kolumny,
- * usuwający dodaną kolumnę.
-6. Usuwający wszystkie wiersze ze wszystkich tabel.
-7. Zawierający co najmniej 10 – 15 zaawansowanych zapytań / widoków wykorzystujących np.:
- * MIN, MAX, SUM, AVG, COUNT,
- * GROUP BY,
- * HAVING,
- * ORDER BY,
- * UNION, INTERSECT, MINUS,
- * EXISTS, IN, ALL, ANY,
- * CASE,
- * złączenie,
- * podzapytania,
- * funkcje np. do obsługi dat, testów, liczb, itd.,
- * zapytania z parametrem,
- * itp.
-Wszytskie instrukcje z tego punktu powinny być poprzedzone opisem słownym.
+Na podany temat należy przygotować następujące skrypty (*.sql):
+1. Tworzący co najmniej 7 - 10 procedur oraz funkcji zapewniających pełną obsługę bazy danych.
+2. Usuwający procedury oraz funkcje.
+3. Tworzący co najmniej 5-10 wyzwalaczy.
+4. Usuwający wyzwalacze.
 
-Instrukcje bardzo proste (np. dotyczące tylko jednej tabeli: SELECT * FROM dual) nie będą oceniane. Instrukcje skopiowane z wykładu lub instrukcji laboratoryjnych (ze zmienionymi nazwami tabel np. SELECT * FROM pracownik WHERE wynagrodzenia > (SELECT AVG (wynagrodzenie) FROM pracownik)) nie będą oceniane.
+Do wszystkich procedur, funkcji oraz wyzwalaczy powinien zostać dodany fragment kodu testujący ich działanie. Wszystkie podprogramy powinny znaleźć się w utworzonym pakiecie. 
 
-Proszę przynieść wszystkie materiały stworzone podczas poprzedniej pracy domowej.
+Podprogramy bardzo proste oraz skopiowane z wykładu lub instrukcji laboratoryjnych (po zmianie nazw tabel) nie będą oceniane. W skryptach należy co najmniej raz użyć: instrukcji SELECT INTO, kursora, kursora z co najmniej jednym parametrem, własnego wyjątku, błędu aplikacji oraz pakietu DBMS_RANDOM. 
 
-
+Proszę przynieść wszystkie materiały stworzone podczas poprzednich prac domowych.
