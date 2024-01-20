@@ -1,0 +1,23 @@
+-- Usunięcie procedury DodajNowegoFunkcjonariusza
+DROP PROCEDURE DodajNowegoFunkcjonariusza;
+
+-- Usunięcie funkcji SrednieWynagrodzenie
+DROP FUNCTION SrednieWynagrodzenie;
+
+-- Usunięcie procedury WypelnijTabeleFunkcjonariusz
+DROP PROCEDURE WypelnijTabeleFunkcjonariusz;
+
+-- Usunięcie procedury ModyfikujFunkcjonariusza
+DROP PROCEDURE ModyfikujFunkcjonariusza;
+
+-- Usunięcie funkcji OpisDatyNajpozniejWystawionejFaktury_IF
+DROP FUNCTION OpisDatyNajpozniejWystawionejFaktury_IF;
+
+-- Usunięcie funkcji SredniaKwotaNagrodForKursor
+DROP FUNCTION SredniaKwotaNagrodForKursor;
+
+-- Usunięcie funkcji IloscFunkcjonariuszyWDanejJednostce
+DROP FUNCTION IloscFunkcjonariuszyWDanejJednostce;
+
+-- Usunięcie procedury PobierzInformacjeOInterwencji
+DROP PROCEDURE PobierzInformacjeOInterwencji;

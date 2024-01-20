@@ -1,0 +1,213 @@
+--1. Procedura dodająca nowy wiersz do tabeli Funkcjonariusz:
+CREATE OR REPLACE PROCEDURE DodajNowegoFunkcjonariusza(
+  p_imie VARCHAR2,
+  p_nazwisko VARCHAR2,
+  p_stopien VARCHAR2,
+  p_numer_legitymacji INT
+) AS
+  v_id_funkcjonariusza INT;
+BEGIN
+  SELECT seq_funkcjonariusz.nextval INTO v_id_funkcjonariusza FROM dual;
+
+  INSERT INTO Funkcjonariusz (id_funkcjonariusza, imie, nazwisko, stopien, numer_legitymacji)
+  VALUES (v_id_funkcjonariusza, p_imie, p_nazwisko, p_stopien, p_numer_legitymacji);
+  
+  COMMIT;
+END DodajNowegoFunkcjonariusza;
+/
+
+
+--2. Funkcja zwracająca średnie wynagrodzenie pracowników:
+CREATE OR REPLACE FUNCTION SrednieWynagrodzenie RETURN NUMBER IS
+  v_suma_wynagrodzen NUMBER := 0;
+  v_liczba_pracownikow NUMBER := 0;
+  v_srednie_wynagrodzenie NUMBER;
+BEGIN
+  FOR rec IN (SELECT wynagrodzenie FROM Funkcjonariusz) LOOP
+    v_suma_wynagrodzen := v_suma_wynagrodzen + rec.wynagrodzenie;
+    v_liczba_pracownikow := v_liczba_pracownikow + 1;
+  END LOOP;
+
+  IF v_liczba_pracownikow > 0 THEN
+    v_srednie_wynagrodzenie := v_suma_wynagrodzen / v_liczba_pracownikow;
+  ELSE
+    v_srednie_wynagrodzenie := 0;
+  END IF;
+
+  RETURN v_srednie_wynagrodzenie;
+END SrednieWynagrodzenie;
+/
+
+
+--3. Procedura wypełniająca tabelę Funkcjonariusz danymi generowanymi przez pakiet DBMS_RANDOM:
+CREATE OR REPLACE PROCEDURE WypelnijTabeleFunkcjonariusz AS
+BEGIN
+  FOR i IN 1..10 LOOP
+    INSERT INTO Funkcjonariusz (imie, nazwisko, stopien, numer_legitymacji)
+    VALUES (
+      DBMS_RANDOM.STRING('U', 10),
+      DBMS_RANDOM.STRING('L', 10),
+      DBMS_RANDOM.STRING('A', 5),
+      TO_NUMBER(DBMS_RANDOM.VALUE(10000, 99999))
+    );
+  END LOOP;
+
+  COMMIT;
+END WypelnijTabeleFunkcjonariusz;
+/
+
+
+--4. Procedura modyfikująca funkcjonariusza w zależności od typu operacji:
+CREATE OR REPLACE PROCEDURE ModyfikujFunkcjonariusza(
+  p_typ_operacji CHAR,
+  p_id_funkcjonariusza INT,
+  p_nowe_imie VARCHAR2 DEFAULT NULL,
+  p_nowe_nazwisko VARCHAR2 DEFAULT NULL,
+  p_nowy_stopien VARCHAR2 DEFAULT NULL,
+  p_nowy_numer_legitymacji INT DEFAULT NULL
+) AS
+BEGIN
+  CASE p_typ_operacji
+    WHEN 'D' THEN
+      DELETE FROM Funkcjonariusz WHERE id_funkcjonariusza = p_id_funkcjonariusza;
+    WHEN 'A' THEN
+      UPDATE Funkcjonariusz
+      SET
+        imie = NVL(p_nowe_imie, imie),
+        nazwisko = NVL(p_nowe_nazwisko, nazwisko),
+        stopien = NVL(p_nowy_stopien, stopien),
+        numer_legitymacji = NVL(p_nowy_numer_legitymacji, numer_legitymacji)
+      WHERE id_funkcjonariusza = p_id_funkcjonariusza;
+    WHEN 'U' THEN
+      -- Dodaj obsługę operacji usuwania
+      NULL;
+  END CASE;
+
+  COMMIT;
+END ModyfikujFunkcjonariusza;
+/
+
+--5. Funkcja wyszukująca datę najpóźniej wystawionej faktury w trzech wariantach: IF, CASE, CASE z wyszukiwaniem:
+
+CREATE OR REPLACE FUNCTION OpisDatyNajpozniejWystawionejFaktury_IF RETURN VARCHAR2 IS
+  v_najpozniejsza_data DATE;
+  v_opis VARCHAR2(100);
+BEGIN
+  SELECT MAX(data_wystawienia) INTO v_najpozniejsza_data FROM Faktura;
+
+  IF TO_CHAR(v_najpozniejsza_data, 'HH24') BETWEEN 0 AND 12 THEN
+    v_opis := 'rano';
+  ELSIF TO_CHAR(v_najpozniejsza_data, 'HH24') BETWEEN 12 AND 18 THEN
+    v_opis := 'południe';
+  ELSIF TO_CHAR(v_najpozniejsza_data, 'HH24') BETWEEN 18 AND 24 THEN
+    v_opis := 'wieczór';
+  END IF;
+
+  RETURN v_opis;
+END OpisDatyNajpozniejWystawionejFaktury_IF;
+/
+
+
+--6. Funkcja liczaca srednia z kwot nagród:
+
+CREATE OR REPLACE FUNCTION SredniaKwotaNagrodForKursor RETURN NUMBER IS
+  v_suma_kwot NUMBER := 0;
+  v_liczba_nagrod NUMBER := 0;
+BEGIN
+  FOR rec IN (SELECT kwota FROM Nagroda) LOOP
+    v_suma_kwot := v_suma_kwot + rec.kwota;
+    v_liczba_nagrod := v_liczba_nagrod + 1;
+  END LOOP;
+
+  IF v_liczba_nagrod > 0 THEN
+    RETURN v_suma_kwot / v_liczba_nagrod;
+  ELSE
+    RETURN 0;
+  END IF;
+END SredniaKwotaNagrodForKursor;
+/
+
+
+
+--7. Funkcja wyliczająca ilość fukcjonariuszy z wyjątkiem i błędem:
+
+
+
+CREATE OR REPLACE FUNCTION IloscFunkcjonariuszyWDanejJednostce(
+  p_id_jednostki INT
+) RETURN INT IS
+  v_liczba_funkcjonariuszy INT := 0;
+  v_cursor SYS_REFCURSOR;
+  v_id_funkcjonariusza INT;
+BEGIN
+  IF p_id_jednostki IS NULL THEN
+    RAISE_APPLICATION_ERROR(-20005, 'ID jednostki nie może być NULL!');
+  END IF;
+
+  OPEN v_cursor FOR SELECT id_funkcjonariusza FROM Funkcjonariusz WHERE id_jednostki = p_id_jednostki;
+
+  LOOP
+    FETCH v_cursor INTO v_id_funkcjonariusza;
+    EXIT WHEN v_cursor%NOTFOUND;
+    v_liczba_funkcjonariuszy := v_liczba_funkcjonariuszy + 1;
+  END LOOP;
+
+  CLOSE v_cursor;
+
+  IF v_liczba_funkcjonariuszy = 0 THEN
+    RAISE_APPLICATION_ERROR(-20006, 'Brak funkcjonariuszy w danej jednostce, ustawiam ilość na 0.');
+    RETURN 0;
+  END IF;
+
+  RETURN v_liczba_funkcjonariuszy;
+EXCEPTION
+  WHEN OTHERS THEN
+    DBMS_OUTPUT.PUT_LINE('Błąd: ' || SQLERRM);
+    RETURN NULL; -- W przypadku błędu, zwróć NULL
+END IloscFunkcjonariuszyWDanejJednostce;
+/
+
+--8. Procedura pobierająca iformacje o interwecji korzystająca z SELECT INTO :
+
+CREATE OR REPLACE PROCEDURE PobierzInformacjeOInterwencji(
+  p_id_interwencji INT,
+  o_opis_interwencji OUT VARCHAR2,
+  o_data_interwencji OUT DATE,
+  o_funkcjonariusz_imie OUT VARCHAR2,
+  o_funkcjonariusz_nazwisko OUT VARCHAR2
+) IS
+BEGIN
+  -- Używamy instrukcji SELECT INTO, aby pobrać informacje o interwencji
+  SELECT i.opis, i.data_interwencji, f.imie, f.nazwisko
+  INTO o_opis_interwencji, o_data_interwencji, o_funkcjonariusz_imie, o_funkcjonariusz_nazwisko
+  FROM Interwencja i
+  JOIN Funkcjonariusz f ON i.id_funkcjonariusza = f.id_funkcjonariusza
+  WHERE i.id_interwencji = p_id_interwencji;
+
+  -- Możesz dodać dodatkową logikę lub manipulacje danymi tutaj
+
+  DBMS_OUTPUT.PUT_LINE('Informacje o interwencji o ID ' || p_id_interwencji || ' zostały pobrane.');
+EXCEPTION
+  WHEN NO_DATA_FOUND THEN
+    DBMS_OUTPUT.PUT_LINE('Nie znaleziono interwencji o podanym ID: ' || p_id_interwencji);
+  WHEN OTHERS THEN
+    DBMS_OUTPUT.PUT_LINE('Błąd: ' || SQLERRM);
+END PobierzInformacjeOInterwencji;
+/
+
+
+--Przykład użycia procedury nr 8:
+DECLARE
+  v_opis_interwencji VARCHAR2(255);
+  v_data_interwencji DATE;
+  v_funkcjonariusz_imie VARCHAR2(50);
+  v_funkcjonariusz_nazwisko VARCHAR2(50);
+BEGIN
+  PobierzInformacjeOInterwencji(1, v_opis_interwencji, v_data_interwencji, v_funkcjonariusz_imie, v_funkcjonariusz_nazwisko);
+  DBMS_OUTPUT.PUT_LINE('Opis interwencji: ' || v_opis_interwencji);
+  DBMS_OUTPUT.PUT_LINE('Data interwencji: ' || TO_CHAR(v_data_interwencji, 'DD.MM.YYYY'));
+  DBMS_OUTPUT.PUT_LINE('Funkcjonariusz: ' || v_funkcjonariusz_imie || ' ' || v_funkcjonariusz_nazwisko);
+END;
+/
+
+
