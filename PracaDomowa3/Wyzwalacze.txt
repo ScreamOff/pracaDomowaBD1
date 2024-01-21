@@ -1,0 +1,61 @@
+--1. Wyzwalacz do sprawdzania poprawności dodawania nowego funkcjonariusza:
+
+CREATE OR REPLACE TRIGGER SprawdzDodawanieFunkcjonariusza
+BEFORE INSERT ON Funkcjonariusz
+FOR EACH ROW
+BEGIN
+  IF :NEW.stopien NOT IN ('Komisarz', 'Inspektor', 'Sierżant', 'Starszy Sierżant') THEN
+    RAISE_APPLICATION_ERROR(-20001, 'Nieprawidłowy stopień funkcjonariusza.');
+  END IF;
+END;
+/
+
+--2. Wyzwalacz ustawiajacy status na wartość 'w trakcie'
+CREATE OR REPLACE TRIGGER UstawStatusOtwartejSprawy
+BEFORE INSERT ON Sprawa
+FOR EACH ROW
+BEGIN
+  :NEW.status := 'w trakcie';
+END;
+/
+
+
+
+/
+
+
+
+--3. Wyzwalacz do blokowania usuwania rekordów w tabeli Interwencja:
+
+CREATE OR REPLACE TRIGGER BlokujUsuwanieInterwencji
+BEFORE DELETE ON Interwencja
+BEGIN
+  RAISE_APPLICATION_ERROR(-20002, 'Nie można usuwać rekordów z tabeli Interwencja.');
+END;
+/
+
+--4. Wyzwalacz do automatycznego aktualizowania kwoty nagordy poszukiwanego:
+
+CREATE OR REPLACE TRIGGER AktualizujKwoteNagrody
+AFTER UPDATE ON Nagroda
+FOR EACH ROW
+BEGIN
+  UPDATE Poszukiwany SET nagroda = :NEW.kwota WHERE id_poszukiwanego = :NEW.id_poszukiwanego;
+END;
+/
+
+
+
+--5. Wyzwalacz  sprawdzajacy, czy kwota nagrody przyznawanej funkcjonariuszowi nie przekracza określonego limitu :
+
+CREATE OR REPLACE TRIGGER SprawdzKwoteNagrody
+BEFORE INSERT ON Nagroda
+FOR EACH ROW
+DECLARE
+  v_limit NUMBER := 5000; -- Przykładowy limit kwoty nagrody
+BEGIN
+  IF :NEW.kwota > v_limit THEN
+    RAISE_APPLICATION_ERROR(-20003, 'Kwota nagrody przekracza limit.');
+  END IF;
+END;
+/

@@ -1,0 +1,14 @@
+-- Usunięcie wyzwalacza SprawdzDodawanieFunkcjonariusza
+DROP TRIGGER SprawdzDodawanieFunkcjonariusza;
+
+-- Usunięcie wyzwalacza UstawStatusOtwartejSprawy
+DROP TRIGGER UstawStatusOtwartejSprawy;
+
+-- Usunięcie wyzwalacza BlokujUsuwanieInterwencji
+DROP TRIGGER BlokujUsuwanieInterwencji;
+
+-- Usunięcie wyzwalacza AktualizujKwoteNagrody
+DROP TRIGGER AktualizujKwoteNagrody;
+
+-- Usunięcie wyzwalacza SprawdzKwoteNagrody
+DROP TRIGGER SprawdzKwoteNagrody;
