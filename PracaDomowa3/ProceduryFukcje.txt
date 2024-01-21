@@ -17,26 +17,27 @@ END DodajNowegoFunkcjonariusza;
 /
 
 
---2. Funkcja zwracająca średnie wynagrodzenie pracowników:
-CREATE OR REPLACE FUNCTION SrednieWynagrodzenie RETURN NUMBER IS
-  v_suma_wynagrodzen NUMBER := 0;
-  v_liczba_pracownikow NUMBER := 0;
-  v_srednie_wynagrodzenie NUMBER;
+--2. Funkcja zwracająca średnie kwote nagrody :
+CREATE OR REPLACE FUNCTION SredniaKwotaNagrody RETURN NUMBER IS
+  v_suma_kwot NUMBER := 0;
+  v_liczba_nagrod NUMBER := 0;
+  v_srednia_kwota NUMBER;
 BEGIN
-  FOR rec IN (SELECT wynagrodzenie FROM Funkcjonariusz) LOOP
-    v_suma_wynagrodzen := v_suma_wynagrodzen + rec.wynagrodzenie;
-    v_liczba_pracownikow := v_liczba_pracownikow + 1;
+  FOR rec IN (SELECT kwota FROM Nagroda) LOOP
+    v_suma_kwot := v_suma_kwot + rec.kwota;
+    v_liczba_nagrod := v_liczba_nagrod + 1;
   END LOOP;
 
-  IF v_liczba_pracownikow > 0 THEN
-    v_srednie_wynagrodzenie := v_suma_wynagrodzen / v_liczba_pracownikow;
+  IF v_liczba_nagrod > 0 THEN
+    v_srednia_kwota := v_suma_kwot / v_liczba_nagrod;
   ELSE
-    v_srednie_wynagrodzenie := 0;
+    v_srednia_kwota := 0;
   END IF;
 
-  RETURN v_srednie_wynagrodzenie;
-END SrednieWynagrodzenie;
+  RETURN v_srednia_kwota;
+END SredniaKwotaNagrody;
 /
+
 
 
 --3. Procedura wypełniająca tabelę Funkcjonariusz danymi generowanymi przez pakiet DBMS_RANDOM:
@@ -87,24 +88,30 @@ BEGIN
 END ModyfikujFunkcjonariusza;
 /
 
---5. Funkcja wyszukująca datę najpóźniej wystawionej faktury w trzech wariantach: IF, CASE, CASE z wyszukiwaniem:
+--5. Funkcja wyszukująca datę najpóźniej przeprowadzonej interwencji w trzech wariantach: IF, CASE, CASE z wyszukiwaniem:
 
-CREATE OR REPLACE FUNCTION OpisDatyNajpozniejWystawionejFaktury_IF RETURN VARCHAR2 IS
+CREATE OR REPLACE FUNCTION OpisPoryRokuNajpozniejInterwencji_IF RETURN VARCHAR2 IS
   v_najpozniejsza_data DATE;
   v_opis VARCHAR2(100);
 BEGIN
-  SELECT MAX(data_wystawienia) INTO v_najpozniejsza_data FROM Faktura;
+  SELECT MAX(data_interwencji) INTO v_najpozniejsza_data FROM Interwencja;
 
-  IF TO_CHAR(v_najpozniejsza_data, 'HH24') BETWEEN 0 AND 12 THEN
-    v_opis := 'rano';
-  ELSIF TO_CHAR(v_najpozniejsza_data, 'HH24') BETWEEN 12 AND 18 THEN
-    v_opis := 'południe';
-  ELSIF TO_CHAR(v_najpozniejsza_data, 'HH24') BETWEEN 18 AND 24 THEN
-    v_opis := 'wieczór';
+  IF v_najpozniejsza_data IS NOT NULL THEN
+    IF TO_CHAR(v_najpozniejsza_data, 'MM') IN ('12', '01', '02') THEN
+      v_opis := 'zima';
+    ELSIF TO_CHAR(v_najpozniejsza_data, 'MM') IN ('03', '04', '05') THEN
+      v_opis := 'wiosna';
+    ELSIF TO_CHAR(v_najpozniejsza_data, 'MM') IN ('06', '07', '08') THEN
+      v_opis := 'lato';
+    ELSE
+      v_opis := 'jesień';
+    END IF;
+  ELSE
+    v_opis := 'brak interwencji';
   END IF;
 
   RETURN v_opis;
-END OpisDatyNajpozniejWystawionejFaktury_IF;
+END OpisPoryRokuNajpozniejInterwencji_IF;
 /
 
 
@@ -144,7 +151,10 @@ BEGIN
     RAISE_APPLICATION_ERROR(-20005, 'ID jednostki nie może być NULL!');
   END IF;
 
-  OPEN v_cursor FOR SELECT id_funkcjonariusza FROM Funkcjonariusz WHERE id_jednostki = p_id_jednostki;
+  OPEN v_cursor FOR
+    SELECT id_funkcjonariusza
+    FROM Funkcjonariusz
+    WHERE id_funkcjonariusza IN (SELECT id_funkcjonariusza FROM Jednostka WHERE id_jednostki = p_id_jednostki);
 
   LOOP
     FETCH v_cursor INTO v_id_funkcjonariusza;
@@ -167,6 +177,7 @@ EXCEPTION
 END IloscFunkcjonariuszyWDanejJednostce;
 /
 
+
 --8. Procedura pobierająca iformacje o interwecji korzystająca z SELECT INTO :
 
 CREATE OR REPLACE PROCEDURE PobierzInformacjeOInterwencji(
@@ -177,14 +188,12 @@ CREATE OR REPLACE PROCEDURE PobierzInformacjeOInterwencji(
   o_funkcjonariusz_nazwisko OUT VARCHAR2
 ) IS
 BEGIN
-  -- Używamy instrukcji SELECT INTO, aby pobrać informacje o interwencji
-  SELECT i.opis, i.data_interwencji, f.imie, f.nazwisko
+  SELECT i.id_interwencji, i.data_interwencji, f.imie, f.nazwisko
   INTO o_opis_interwencji, o_data_interwencji, o_funkcjonariusz_imie, o_funkcjonariusz_nazwisko
   FROM Interwencja i
   JOIN Funkcjonariusz f ON i.id_funkcjonariusza = f.id_funkcjonariusza
   WHERE i.id_interwencji = p_id_interwencji;
 
-  -- Możesz dodać dodatkową logikę lub manipulacje danymi tutaj
 
   DBMS_OUTPUT.PUT_LINE('Informacje o interwencji o ID ' || p_id_interwencji || ' zostały pobrane.');
 EXCEPTION
@@ -195,8 +204,67 @@ EXCEPTION
 END PobierzInformacjeOInterwencji;
 /
 
+-- Przykłądy użycia :
 
---Przykład użycia procedury nr 8:
+--1. DodajNowegoFunkcjonariusza :    
+BEGIN
+  DodajNowegoFunkcjonariusza('Jan', 'Nowak', 'Komisarz', 12345);
+  COMMIT;
+END;
+/
+
+--2. SredniaKwotaNagrody :
+DECLARE
+  srednia_kwota NUMBER;
+BEGIN
+  srednia_kwota := SredniaKwotaNagrody;
+  DBMS_OUTPUT.PUT_LINE('Średnia kwota nagrody: ' || srednia_kwota);
+END;
+/
+
+--3.  WypelnijTabeleFunkcjonariusz :
+BEGIN
+  WypelnijTabeleFunkcjonariusz;
+  COMMIT;
+END;
+/
+
+--4. ModyfikujFunkcjonariusza :
+BEGIN
+  ModyfikujFunkcjonariusza('A', 1, 'Marek', 'Kowalski', 'Inspektor', 54321);
+  COMMIT;
+END;
+/
+-- 5. OpisPoryRokuNajpozniejInterwencji_IF: 
+DECLARE
+  opis_pory_roku VARCHAR2(100);
+BEGIN
+  opis_pory_roku := OpisPoryRokuNajpozniejInterwencji_IF;
+  DBMS_OUTPUT.PUT_LINE('Pora roku najpóźniej przeprowadzonej interwencji: ' || opis_pory_roku);
+END;
+/
+
+-- 6. SredniaKwotaNagrodForKursor :
+DECLARE
+  srednia_kwota NUMBER;
+BEGIN
+  srednia_kwota := SredniaKwotaNagrodForKursor;
+  DBMS_OUTPUT.PUT_LINE('Średnia kwota nagrody (kursor): ' || srednia_kwota);
+END;
+/
+    
+-- 7. IloscFunkcjonariuszyWDanejJednostce
+DECLARE
+  ilosc_funkcjonariuszy INT;
+BEGIN
+  ilosc_funkcjonariuszy := IloscFunkcjonariuszyWDanejJednostce(1);
+  DBMS_OUTPUT.PUT_LINE('Ilość funkcjonariuszy w jednostce: ' || ilosc_funkcjonariuszy);
+END;
+/
+
+
+    
+--Przykład użycia procedury nr 8 PobierzInformacjeOInterwencji:
 DECLARE
   v_opis_interwencji VARCHAR2(255);
   v_data_interwencji DATE;
