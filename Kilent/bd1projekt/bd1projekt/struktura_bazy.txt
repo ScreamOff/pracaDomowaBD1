@@ -1,0 +1,111 @@
+
+CREATE TABLE Funkcjonariusz (
+  id_funkcjonariusza INTEGER PRIMARY KEY AUTOINCREMENT,
+  imie VARCHAR(255),
+  nazwisko VARCHAR(255),
+  stopien VARCHAR(50),
+  numer_legitymacji INTEGER
+);
+
+-- Tabela: Jednostka
+CREATE TABLE Jednostka (
+  id_jednostki INTEGER PRIMARY KEY AUTOINCREMENT,
+  nazwa VARCHAR(100),
+  lokalizacja VARCHAR(255),
+  id_funkcjonariusza INTEGER,
+  FOREIGN KEY (id_funkcjonariusza) REFERENCES Funkcjonariusz(id_funkcjonariusza)
+);
+
+-- Tabela: Sprawa
+CREATE TABLE Sprawa (
+  id_sprawy INTEGER PRIMARY KEY AUTOINCREMENT,
+  opis VARCHAR(255),
+  status VARCHAR(50),
+  id_jednostki INTEGER,
+  FOREIGN KEY (id_jednostki) REFERENCES Jednostka(id_jednostki)
+);
+
+-- Tabela: Dowód
+CREATE TABLE Dowod (
+  id_dowodu INTEGER PRIMARY KEY AUTOINCREMENT,
+  opis VARCHAR(255),
+  id_sprawy INTEGER,
+  FOREIGN KEY (id_sprawy) REFERENCES Sprawa(id_sprawy)
+);
+
+-- Tabela: Przestępca
+CREATE TABLE Przestepca (
+  id_przestepcy INTEGER PRIMARY KEY AUTOINCREMENT,
+  imie_nazwisko VARCHAR(255),
+  pseudonim VARCHAR(100),
+  id_sprawy INTEGER,
+  FOREIGN KEY (id_sprawy) REFERENCES Sprawa(id_sprawy)
+);
+
+-- Tabela: Aresztowanie
+CREATE TABLE Aresztowanie (
+  id_aresztowania INTEGER PRIMARY KEY AUTOINCREMENT,
+  id_funkcjonariusza INTEGER,
+  id_przestepcy INTEGER,
+  id_sprawy INTEGER,
+  data_aresztowania DATE,
+  FOREIGN KEY (id_funkcjonariusza) REFERENCES Funkcjonariusz(id_funkcjonariusza),
+  FOREIGN KEY (id_przestepcy) REFERENCES Przestepca(id_przestepcy),
+  FOREIGN KEY (id_sprawy) REFERENCES Sprawa(id_sprawy)
+);
+
+-- Tabela: Miejsce
+CREATE TABLE Miejsce (
+  id_miejsca INTEGER PRIMARY KEY AUTOINCREMENT,
+  nazwa_miejsca VARCHAR(255),
+  opis VARCHAR(255)
+);
+
+-- Tabela: Patrol
+CREATE TABLE Patrol (
+  id_patrolu INTEGER PRIMARY KEY AUTOINCREMENT,
+  id_funkcjonariusza INTEGER,
+  data_patrolu DATE,
+  FOREIGN KEY (id_funkcjonariusza) REFERENCES Funkcjonariusz(id_funkcjonariusza)
+);
+
+-- Tabela: Wykroczenie
+CREATE TABLE Wykroczenie (
+  id_wykroczenia INTEGER PRIMARY KEY AUTOINCREMENT,
+  opis VARCHAR(255),
+  id_sprawy INTEGER,
+  FOREIGN KEY (id_sprawy) REFERENCES Sprawa(id_sprawy)
+);
+
+-- Tabela: Ofiara
+CREATE TABLE Ofiara (
+  id_ofiary INTEGER PRIMARY KEY AUTOINCREMENT,
+  imie_nazwisko VARCHAR(255),
+  id_sprawy INTEGER,
+  FOREIGN KEY (id_sprawy) REFERENCES Sprawa(id_sprawy)
+);
+
+-- Tabela: Poszukiwany
+CREATE TABLE Poszukiwany (
+  id_poszukiwanego INTEGER PRIMARY KEY AUTOINCREMENT,
+  imie_nazwisko VARCHAR(255),
+  nagroda FLOAT
+);
+
+-- Tabela: Nagroda
+CREATE TABLE Nagroda (
+  id_nagrody INTEGER PRIMARY KEY AUTOINCREMENT,
+  id_poszukiwanego INTEGER,
+  kwota FLOAT,
+  FOREIGN KEY (id_poszukiwanego) REFERENCES Poszukiwany(id_poszukiwanego)
+);
+
+-- Tabela: Interwencja
+CREATE TABLE Interwencja (
+  id_interwencji INTEGER PRIMARY KEY AUTOINCREMENT,
+  id_sprawy INTEGER,
+  id_funkcjonariusza INTEGER,
+  data_interwencji DATE,
+  FOREIGN KEY (id_sprawy) REFERENCES Sprawa(id_sprawy),
+  FOREIGN KEY (id_funkcjonariusza) REFERENCES Funkcjonariusz(id_funkcjonariusza)
+);
