@@ -10,7 +10,7 @@ DROP PROCEDURE WypelnijTabeleFunkcjonariusz;
 -- Usunięcie procedury ModyfikujFunkcjonariusza
 DROP PROCEDURE ModyfikujFunkcjonariusza;
 
--- Usunięcie funkcji OpisDatyNajpozniejWystawionejFaktury_IF
+-- Usunięcie funkcji OpisPoryRokuNajpozniejInterwencji_IF
 DROP FUNCTION OpisDatyNajpozniejWystawionejFaktury_IF;
 
 -- Usunięcie funkcji SredniaKwotaNagrodForKursor
