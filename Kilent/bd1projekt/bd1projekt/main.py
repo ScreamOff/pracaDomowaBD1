@@ -104,7 +104,6 @@ def main():
             display_wyswietl_options()
             display_choice = input("Twój wybór: ")
             display_list(display_choice);
-            break
         elif choice == 'Q':
             print("Do widzenia!")
             break
